@@ -1,0 +1,22 @@
+version: '3'
+services:
+  pg:
+    image: postgres:11.4-alpine
+    container_name: pg
+    ports:
+      - 3000:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: coffee_machine
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+  app:
+    image: coffee
+    container_name: app
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - pg
